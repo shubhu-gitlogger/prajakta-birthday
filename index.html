@@ -266,7 +266,9 @@
   let pieces = [];
 
   function showMusicError() {
-    musicStatus.textContent = 'Could not play birthday-song.mp3. Check that the file exists and uses a browser-supported audio format.';
+    musicStatus.textContent = music.error && music.error.code === 4
+      ? 'This browser cannot decode birthday-song.mp3. Replace it with a valid MP3 file.'
+      : 'Could not load birthday-song.mp3. Keep it beside index.html.';
     musicStatus.classList.add('show');
   }
 
@@ -277,8 +279,9 @@
       if (music.error) {
         showMusicError();
       } else if (error.name === 'NotAllowedError') {
-        // musicStatus.textContent = 'Song';
+        musicStatus.textContent = 'Your browser blocked autoplay. Tap anywhere to start the song.';
         musicStatus.classList.add('show');
+        document.addEventListener('pointerdown', () => playMusic(), { once: true });
       } else {
         musicStatus.textContent = 'The birthday music could not be started.';
         musicStatus.classList.add('show');
