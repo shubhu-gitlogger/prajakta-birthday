@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Happy Birthday, Friend!</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
@@ -24,17 +25,19 @@
     font-size: 1.1rem;
     line-height: 1.6;
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
     overflow-x: hidden;
     text-align: center;
   }
   canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
 
   /* Hero */
-  .hero { padding: 56px 20px 40px; max-width: 760px; margin: 0 auto; }
+  .hero { padding: 24px 20px 8px; margin: 0 auto; }
   h1 {
     font-family: 'Bagel Fat One', cursive;
     font-weight: 400;
-    font-size: clamp(2.8rem, 12vw, 6rem);
+    font-size: clamp(2.5rem, 7vw, 4.5rem);
     line-height: 1;
     color: var(--sun);
     text-shadow: 4px 4px 0 var(--pink);
@@ -44,14 +47,26 @@
     font-family: 'Bagel Fat One', cursive;
     font-size: clamp(1.8rem, 7vw, 3rem);
     color: var(--mint);
-    margin-bottom: 36px;
+    margin-bottom: 0;
   }
+  .birthday-layout {
+    width: min(1080px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 8px 0 24px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-items: center;
+    flex: 1;
+  }
+  .photo-column { min-width: 0; width: min(100%, 380px); justify-self: center; }
+  .music-status { display: none; margin-top: 8px; font-size: .85rem; overflow-wrap: anywhere; }
+  .music-status.show { display: block; }
 
   /* Photo */
   .photo {
     background: var(--paper);
     padding: 14px 14px 56px;
-    width: min(320px, 84vw);
+    width: min(320px, 100%);
     margin: 0 auto;
     transform: rotate(-3deg);
     box-shadow: 0 18px 40px rgba(0,0,0,.45);
@@ -68,7 +83,7 @@
   }
 
   /* Cake */
-  .cake-wrap { padding: 56px 20px 24px; }
+  .cake-wrap { padding: 28px 16px 20px; }
   .cake { width: 150px; margin: 0 auto 16px; }
   .flame { transform-origin: 50% 100%; animation: flicker .5s ease-in-out infinite alternate; }
   .out .flame { display: none; }
@@ -86,18 +101,98 @@
 
   /* Message */
   .message {
-    max-width: 620px; margin: 0 auto; padding: 24px 24px 64px;
+    min-width: 0; max-width: none; margin: 0; padding: clamp(20px, 3vw, 36px);
     display: none;
+    border: 1px solid rgba(255, 255, 255, .16);
+    border-radius: 24px;
+    background: rgba(255, 255, 255, .06);
   }
   .message.show { display: block; }
   .message h2 {
     font-family: 'Bagel Fat One', cursive; font-weight: 400;
-    font-size: 2rem; color: var(--sun); margin-bottom: 16px;
+    font-size: clamp(1.65rem, 3vw, 2rem); color: var(--sun); margin-bottom: 16px;
   }
   .message p { margin-bottom: 16px; }
   .sign { font-weight: 700; color: var(--mint); font-size: 1.3rem; }
 
-  footer { padding: 0 20px 40px; font-size: .9rem; opacity: .6; }
+  .anthem {
+    margin-top: 24px;
+    padding: 20px;
+    border: 2px solid rgba(255, 201, 60, .55);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .06);
+  }
+  .anthem-label {
+    color: var(--mint);
+    font-size: .85rem;
+    font-weight: 700;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+  .anthem-lyric {
+    color: var(--sun);
+    font-family: 'Bagel Fat One', cursive;
+    font-size: clamp(1.25rem, 5vw, 1.8rem);
+    line-height: 1.25;
+  }
+
+  footer { padding: 0 20px 16px; font-size: .9rem; opacity: .6; }
+
+  @media (min-width: 721px) {
+    .hero { padding: 16px 20px 4px; }
+    h1 { font-size: 3.5rem; }
+    .name { font-size: 2.2rem; }
+    .photo { width: min(250px, 100%); padding: 10px 10px 44px; }
+    .cake-wrap { padding: 18px 12px 12px; }
+    .cake { width: 110px; margin-bottom: 10px; }
+    button { padding: 10px 20px; }
+    .music-status { font-size: .75rem; }
+    .message { padding: 20px; }
+    .message h2 { margin-bottom: 10px; }
+    .message p { margin-bottom: 10px; }
+    .anthem { margin-top: 14px; padding: 14px; }
+    .birthday-layout.revealed {
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      gap: clamp(24px, 5vw, 64px);
+    }
+    .birthday-layout.revealed .photo-column { width: auto; }
+  }
+
+  @media (max-width: 720px) {
+    .birthday-layout {
+      width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0;
+      flex: initial;
+      padding: 8px 0 24px;
+    }
+    .message { width: calc(100% - 32px); margin: 12px auto 0; }
+  }
+
+  @media (max-width: 480px) {
+    body { font-size: 1rem; }
+    .hero { padding: 32px 16px 12px; }
+    h1 {
+      font-size: clamp(2.25rem, 11vw, 3.25rem);
+      text-shadow: 3px 3px 0 var(--pink);
+      text-wrap: balance;
+    }
+    .name {
+      font-size: clamp(1.5rem, 7vw, 2rem);
+      overflow-wrap: anywhere;
+    }
+    .photo { width: min(300px, 82vw); padding: 10px 10px 48px; }
+    .photo figcaption { bottom: 10px; }
+    .cake-wrap { padding: 28px 16px 20px; }
+    .cake { width: min(150px, 42vw); }
+    button { max-width: 100%; min-height: 48px; padding: 12px 20px; }
+    .message { padding: 24px 18px; }
+    .message h2 { font-size: clamp(1.65rem, 8vw, 2rem); }
+    .sign { font-size: 1.15rem; }
+    .anthem { padding: 18px 14px; }
+    footer { padding: 0 16px 28px; }
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .flame { animation: none; }
@@ -110,41 +205,51 @@
 
 <header class="hero">
   <h1>Happy Birthday!</h1>
-  <p class="name">FRIEND_NAME</p>
+  <p class="name">Prajakta</p>
+</header>
 
+<main class="birthday-layout">
+  <div class="photo-column">
   <figure class="photo">
     <img src="WhatsApp Image 2026-11-18 at 11.48.46 AM.jpeg" alt="Us together" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
     <div class="ph" aria-hidden="true">🎂</div>
     <figcaption>Me &amp; you</figcaption>
   </figure>
-</header>
 
-<section class="cake-wrap" id="cake">
-  <svg class="cake" viewBox="0 0 150 140" role="img" aria-label="Birthday cake with one candle">
-    <g class="flame">
-      <path d="M75 8 C84 22 86 30 75 38 C64 30 66 22 75 8Z" fill="#ffc93c"/>
-      <path d="M75 20 C80 28 80 32 75 36 C70 32 70 28 75 20Z" fill="#ff4d8d"/>
-    </g>
-    <rect x="72" y="38" width="6" height="26" fill="#5eead4"/>
-    <rect x="20" y="64" width="110" height="34" rx="8" fill="#ff4d8d"/>
-    <rect x="10" y="98" width="130" height="34" rx="8" fill="#ffc93c"/>
-    <path d="M20 76 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 10 0" fill="none" stroke="#fff8ff" stroke-width="5" stroke-linecap="round"/>
-  </svg>
-  <button id="blow" type="button">Blow out the candle</button>
-</section>
+  <section class="cake-wrap" id="cake">
+    <svg class="cake" viewBox="0 0 150 140" role="img" aria-label="Birthday cake with one candle">
+      <g class="flame">
+        <path d="M75 8 C84 22 86 30 75 38 C64 30 66 22 75 8Z" fill="#ffc93c"/>
+        <path d="M75 20 C80 28 80 32 75 36 C70 32 70 28 75 20Z" fill="#ff4d8d"/>
+      </g>
+      <rect x="72" y="38" width="6" height="26" fill="#5eead4"/>
+      <rect x="20" y="64" width="110" height="34" rx="8" fill="#ff4d8d"/>
+      <rect x="10" y="98" width="130" height="34" rx="8" fill="#ffc93c"/>
+      <path d="M20 76 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 10 0" fill="none" stroke="#fff8ff" stroke-width="5" stroke-linecap="round"/>
+    </svg>
+    <button id="blow" type="button">Blow out the candle</button>
+    <p class="music-status" id="music-status" role="status" aria-live="polite"></p>
+    <audio id="birthday-music" src="birthday-song.mp3" loop preload="auto"></audio>
+  </section>
+  </div>
 
-<section class="message" id="message" aria-live="polite">
-  <h2>Wishing you the best year yet</h2>
-  <p>
-    Thank you for every laugh, every late-night talk, and every time you showed up
-    when it mattered. I'm lucky to have you as a friend.
-  </p>
-  <p>
-    May this year bring you good health, big wins, and plenty of reasons to smile.
-    Whatever you're aiming for, go get it.
-  </p>
-  <p class="sign">Happy Birthday! 🎉<br>From YOUR_NAME</p>
-</section>
+  <section class="message" id="message" aria-live="polite">
+    <h2>Wishing you the best year yet</h2>
+    <p>
+      Thank you for every laugh, every late-night talk, and every time you showed up
+      when it mattered. I'm lucky to have you as a friend.
+    </p>
+    <p>
+      May this year bring you good health, big wins, and plenty of reasons to smile.
+      Whatever you're aiming for, go get it.
+    </p>
+    <p class="sign">Happy Birthday! 🎉<br> From Shubhankar</p>
+    <!-- <div class="anthem">
+      <p class="anthem-label">Birthday anthem</p>
+      <p class="anthem-lyric">Add 50 cents in da clubs, shorty, its your birthday!</p>
+    </div> -->
+  </section>
+</main>
 
 <footer>Made with ❤️ just for you</footer>
 
@@ -152,10 +257,41 @@
   const cakeWrap = document.getElementById('cake');
   const msg = document.getElementById('message');
   const btn = document.getElementById('blow');
+  const music = document.getElementById('birthday-music');
+  const musicStatus = document.getElementById('music-status');
+  const layout = document.querySelector('.birthday-layout');
   const canvas = document.getElementById('confetti');
   const ctx = canvas.getContext('2d');
   const colors = ['#ff4d8d', '#ffc93c', '#5eead4', '#fff8ff'];
   let pieces = [];
+
+  function showMusicError() {
+    musicStatus.textContent = 'Could not play birthday-song.mp3. Check that the file exists and uses a browser-supported audio format.';
+    musicStatus.classList.add('show');
+  }
+
+  async function playMusic() {
+    try {
+      await music.play();
+    } catch (error) {
+      if (music.error) {
+        showMusicError();
+      } else if (error.name === 'NotAllowedError') {
+        // musicStatus.textContent = 'Song';
+        musicStatus.classList.add('show');
+      } else {
+        musicStatus.textContent = 'The birthday music could not be started.';
+        musicStatus.classList.add('show');
+      }
+    }
+  }
+
+  music.addEventListener('playing', () => {
+    musicStatus.textContent = '';
+    musicStatus.classList.remove('show');
+  });
+  music.addEventListener('error', showMusicError);
+  playMusic();
 
   function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
   addEventListener('resize', resize); resize();
@@ -188,9 +324,9 @@
   btn.addEventListener('click', () => {
     cakeWrap.classList.add('out');
     btn.textContent = 'Make a wish again 🎈';
+    layout.classList.add('revealed');
     msg.classList.add('show');
     if (!matchMedia('(prefers-reduced-motion: reduce)').matches) burst();
-    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
 </script>
 </body>
