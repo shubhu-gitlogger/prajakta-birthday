@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Birthday, Friend!</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --plum: #2a1240;
+    --pink: #ff4d8d;
+    --sun: #ffc93c;
+    --mint: #5eead4;
+    --paper: #fff8ff;
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--plum);
+    color: var(--paper);
+    font-family: 'Nunito', system-ui, sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    min-height: 100vh;
+    overflow-x: hidden;
+    text-align: center;
+  }
+  canvas#confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 10; }
+
+  /* Hero */
+  .hero { padding: 56px 20px 40px; max-width: 760px; margin: 0 auto; }
+  h1 {
+    font-family: 'Bagel Fat One', cursive;
+    font-weight: 400;
+    font-size: clamp(2.8rem, 12vw, 6rem);
+    line-height: 1;
+    color: var(--sun);
+    text-shadow: 4px 4px 0 var(--pink);
+    margin-bottom: 8px;
+  }
+  .name {
+    font-family: 'Bagel Fat One', cursive;
+    font-size: clamp(1.8rem, 7vw, 3rem);
+    color: var(--mint);
+    margin-bottom: 36px;
+  }
+
+  /* Photo */
+  .photo {
+    background: var(--paper);
+    padding: 14px 14px 56px;
+    width: min(320px, 84vw);
+    margin: 0 auto;
+    transform: rotate(-3deg);
+    box-shadow: 0 18px 40px rgba(0,0,0,.45);
+    position: relative;
+  }
+  .photo img, .photo .ph {
+    width: 100%; aspect-ratio: 1; object-fit: cover; display: block;
+    background: #e9d8f5;
+  }
+  .photo .ph { display: none; align-items: center; justify-content: center; font-size: 5rem; }
+  .photo figcaption {
+    position: absolute; bottom: 14px; left: 0; right: 0;
+    color: var(--plum); font-weight: 700;
+  }
+
+  /* Cake */
+  .cake-wrap { padding: 56px 20px 24px; }
+  .cake { width: 150px; margin: 0 auto 16px; }
+  .flame { transform-origin: 50% 100%; animation: flicker .5s ease-in-out infinite alternate; }
+  .out .flame { display: none; }
+  @keyframes flicker { from { transform: scale(1) rotate(-3deg); } to { transform: scale(1.12) rotate(3deg); } }
+  button {
+    font: inherit; font-weight: 700;
+    background: var(--pink); color: var(--paper);
+    border: 0; border-radius: 999px;
+    padding: 14px 28px; cursor: pointer;
+    box-shadow: 0 5px 0 #b8265c;
+    transition: transform .1s, box-shadow .1s;
+  }
+  button:active { transform: translateY(4px); box-shadow: 0 1px 0 #b8265c; }
+  button:focus-visible { outline: 3px solid var(--sun); outline-offset: 4px; }
+
+  /* Message */
+  .message {
+    max-width: 620px; margin: 0 auto; padding: 24px 24px 64px;
+    display: none;
+  }
+  .message.show { display: block; }
+  .message h2 {
+    font-family: 'Bagel Fat One', cursive; font-weight: 400;
+    font-size: 2rem; color: var(--sun); margin-bottom: 16px;
+  }
+  .message p { margin-bottom: 16px; }
+  .sign { font-weight: 700; color: var(--mint); font-size: 1.3rem; }
+
+  footer { padding: 0 20px 40px; font-size: .9rem; opacity: .6; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .flame { animation: none; }
+    html { scroll-behavior: auto; }
+  }
+</style>
+</head>
+<body>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<header class="hero">
+  <h1>Happy Birthday!</h1>
+  <p class="name">FRIEND_NAME</p>
+
+  <figure class="photo">
+    <img src="WhatsApp Image 2026-11-18 at 11.48.46 AM.jpeg" alt="Us together" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'">
+    <div class="ph" aria-hidden="true">🎂</div>
+    <figcaption>Me &amp; you</figcaption>
+  </figure>
+</header>
+
+<section class="cake-wrap" id="cake">
+  <svg class="cake" viewBox="0 0 150 140" role="img" aria-label="Birthday cake with one candle">
+    <g class="flame">
+      <path d="M75 8 C84 22 86 30 75 38 C64 30 66 22 75 8Z" fill="#ffc93c"/>
+      <path d="M75 20 C80 28 80 32 75 36 C70 32 70 28 75 20Z" fill="#ff4d8d"/>
+    </g>
+    <rect x="72" y="38" width="6" height="26" fill="#5eead4"/>
+    <rect x="20" y="64" width="110" height="34" rx="8" fill="#ff4d8d"/>
+    <rect x="10" y="98" width="130" height="34" rx="8" fill="#ffc93c"/>
+    <path d="M20 76 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 20 0 q10 12 10 0" fill="none" stroke="#fff8ff" stroke-width="5" stroke-linecap="round"/>
+  </svg>
+  <button id="blow" type="button">Blow out the candle</button>
+</section>
+
+<section class="message" id="message" aria-live="polite">
+  <h2>Wishing you the best year yet</h2>
+  <p>
+    Thank you for every laugh, every late-night talk, and every time you showed up
+    when it mattered. I'm lucky to have you as a friend.
+  </p>
+  <p>
+    May this year bring you good health, big wins, and plenty of reasons to smile.
+    Whatever you're aiming for, go get it.
+  </p>
+  <p class="sign">Happy Birthday! 🎉<br>From YOUR_NAME</p>
+</section>
+
+<footer>Made with ❤️ just for you</footer>
+
+<script>
+  const cakeWrap = document.getElementById('cake');
+  const msg = document.getElementById('message');
+  const btn = document.getElementById('blow');
+  const canvas = document.getElementById('confetti');
+  const ctx = canvas.getContext('2d');
+  const colors = ['#ff4d8d', '#ffc93c', '#5eead4', '#fff8ff'];
+  let pieces = [];
+
+  function resize() { canvas.width = innerWidth; canvas.height = innerHeight; }
+  addEventListener('resize', resize); resize();
+
+  function burst() {
+    for (let i = 0; i < 160; i++) {
+      pieces.push({
+        x: innerWidth / 2, y: innerHeight * 0.4,
+        vx: (Math.random() - 0.5) * 14, vy: Math.random() * -14 - 3,
+        s: Math.random() * 8 + 4, r: Math.random() * 6,
+        c: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+    if (pieces.length === 160) tick();
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      p.vy += 0.35; p.x += p.vx; p.y += p.vy; p.r += 0.2;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.r);
+      ctx.fillStyle = p.c; ctx.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2);
+      ctx.restore();
+    });
+    pieces = pieces.filter(p => p.y < canvas.height + 20);
+    if (pieces.length) requestAnimationFrame(tick);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
+
+  btn.addEventListener('click', () => {
+    cakeWrap.classList.add('out');
+    btn.textContent = 'Make a wish again 🎈';
+    msg.classList.add('show');
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) burst();
+    msg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+</script>
+</body>
+</html>
